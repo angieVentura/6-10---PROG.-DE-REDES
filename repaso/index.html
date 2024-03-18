@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX con jQuery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Números desde datos.php</h2>
+    <button id="cargarNumeros">Cargar Números</button>
+    <br><br>
+    <div id="listaNumeros"></div>
+
+    <script>
+    $(document).ready(function(){
+        $('#cargarNumeros').click(function(){
+            $.ajax({
+                url: 'datos.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data){
+                    $('#listaNumeros').empty();
+                    $.each(data, function(index, numero){
+                        $('#listaNumeros').append('<li>' + numero + '</li>');
+                    });
+                },
+                error: function(xhr, status, error){
+                    $('#listaNumeros').html('Error al cargar los datos: ' + error);
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
